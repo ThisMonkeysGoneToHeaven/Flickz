@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <title>
+        Movies
+    </title>
+</head>
+
+<body>
+    <h1>{{ movie }}</h1>
+
+    <ul>
+        {% for movie in movies %}
+        <li><a href="#">{{ movie.title }}</a></li>
+        <li>Price --> {{ movie.price}}
+            <img src="{{ movie.poster }}" alt="Movie Poster">
+            {% endfor %}
+    </ul>
+
+</body>
+
+</html>
