@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from .models import Movie
 from django.template import loader
 
-# Create your views here.
-
 
 def IndexView(request):
     # All movie objects

@@ -20,5 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("moviez/", include("moviez.urls")),
     # REST FRAMWEWORK
-    path("api/ticket/", include("api.urls")),
+    path("api/", include("api.urls")),
 ]
