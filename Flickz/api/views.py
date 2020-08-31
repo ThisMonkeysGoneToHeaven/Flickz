@@ -127,58 +127,6 @@ def api_delete_ticket(request, slug):
         "POST",
     ]
 )
-
-# FOR POST REQUEST (CREATING)
-@api_view(
-    [
-        "POST",
-    ]
-)
-
-
-# FOR POST REQUEST (CREATING)
-@api_view(
-    [
-        "POST",
-    ]
-)
-def api_create_ticket_fine(request):
-    tickets = Ticket.objects.all()
-    timings = Timing.objects.all()
-    ticket = Ticket()  # Creating ticket
-    if request.method == "POST":
-        the_time = request.data["timing"]  # getting which timing has been requested
-
-        count = 0  # counting how many times that timing had been used
-        for tickety in tickets:
-            if tickety.timing == Timing.objects.filter(id=the_time)[0]:
-                count += 1
-        if count > 20:  # if more than 20 --> error
-            # already 20 tickets have been booked
-            data = {}
-            data[
-                "Failed"
-            ] = "All tickets for this timing has already been booked. Please try another time."
-            return Response(data=data, status=status.HTTP_226_IM_USED)
-        else:
-            serializer = TicketSerializerCreate(
-                ticket, data=request.data
-            )  # getting the data in serialized form
-            if serializer.is_valid():  # checking if data is valid
-                serializer.save()  # saving if valid
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response(
-                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
-                )  # returning error if data isn't valid
-
-
-# FOR POST REQUEST (CREATING)
-@api_view(
-    [
-        "POST",
-    ]
-)
 def api_create_ticket(request):
     tickets = Ticket.objects.all()
     timings = Timing.objects.all()

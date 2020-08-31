@@ -8,8 +8,8 @@ import datetime
 class Timing(models.Model):
     time = models.CharField(max_length=250)
 
-    def __str__(self):
-        return self.time
+    # def __str__(self):
+    #     return self.time
 
 
 class Movie(models.Model):

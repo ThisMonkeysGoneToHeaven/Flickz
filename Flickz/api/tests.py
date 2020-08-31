@@ -1,7 +1,8 @@
-import json
 from django.urls import reverse, resolve
 from rest_framework.test import APITestCase
 from rest_framework import status
+
+import json
 
 class TicketTestCase(APITestCase):
 
@@ -61,7 +62,7 @@ class TicketTestCase(APITestCase):
 		# checking if ticket was created
 		self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
-		print("Tickets Created Successfully")
+		print("Tickets Created Successfully\n")
 
 	
 	def test_update_ticket(self):
@@ -80,7 +81,7 @@ class TicketTestCase(APITestCase):
 		# checking if details were updated successfully
 		self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-		print("Ticket Updated Successfully")
+		print("Ticket Updated Successfully\n")
 
 	def test_tickets_on_time(self):
 		
@@ -90,11 +91,12 @@ class TicketTestCase(APITestCase):
 		# timing id 
 		slug = 1
 
-		response = self.client.get(f"/api/ticket/time/{slug}")
-		# checking if data is there
-		self.assertEquals(response.status_code, status.HTTP_301_MOVED_PERMANENTLY)
+		response = self.client.get(f"/api/ticket/time/{slug}/")	
 
-		print("Checked if tickets are returned on basis of timing")
+		# checking if data is there
+		self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+		print("Checked if tickets are returned on basis of timing\n")
 
 
 	def test_delete_ticket(self):
@@ -111,7 +113,7 @@ class TicketTestCase(APITestCase):
 		#checking if ticket was deleted successfully
 		self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-		print("Ticket deleted Successfully")
+		print("Ticket deleted Successfully\n")
 
 	def test_user_details_on_ticket_id(self):
 
@@ -121,10 +123,22 @@ class TicketTestCase(APITestCase):
 		# ticket id
 		slug = 1
 
-		response = self.client.get(f"/api/ticket/{slug}")
-		print(response.items)
+		response = self.client.get(f"/api/ticket/{slug}/")
 
-		# checking if data is there
-		self.assertEquals(response.status_code, status.HTTP_301_MOVED_PERMANENTLY)
+		data = {"username": "testcase", 
+				"phone": 1234567809,
+				"movie": "testMovie", 
+				"timing": "04:00 AM"}
 
-		print("Checked user's details through ticked id")
+		# Removing things which are automatically added to the data
+		response_data = eval(response.content.decode("utf-8"))
+		
+		to_delete = ["booked_date", "booked_time", "id"];
+		for i in to_delete:
+			del response_data[i]
+
+		self.assertEquals(response.status_code, status.HTTP_200_OK)
+		self.assertEquals(response_data, data)
+
+
+		print("Checked user's details through ticked id\n")
