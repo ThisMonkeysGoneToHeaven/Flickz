@@ -5,6 +5,7 @@ This is a REST interface for a movie theatre ticket booking system called **Flic
 **All the features expected in the hiring assessment document are fully functional. Testing Functionality has also been included.** Moreover, I have added some **optional** front-end to display an application of this REST Interface.
 
 ## Contents
+- [Overview](https://github.com/DiAnant/Flickz#overview)
 - [Installation](https://github.com/DiAnant/Flickz#installation)
 - [Usage](https://github.com/DiAnant/Flickz/#usage)
 	- [Endpoint 1: To Create a ticket](https://github.com/DiAnant/Flickz/#endpoint-1-to-create-a-ticket)
@@ -15,6 +16,11 @@ This is a REST interface for a movie theatre ticket booking system called **Flic
 - [Testing](https://github.com/DiAnant/Flickz/#testing)
 - [Features](https://github.com/DiAnant/Flickz/#features)
 
+## Overview
+* Currently in this application, we have 6 different movies. All of these 6 movies have 4 different shows throughout the day. All the 6 movies and 4 different time-slots have their unique id from 1-6 and 1-4 respectively.
+* Some tickets have already been booked and are added in the database. **Do note that the tickets will be deleted after 8 hours of booking as they'll get expired as per the requirement mentioned in the document.**
+* **NOTE :** When entering details in Postman, we will refer to these movies and shows by their respective Id's and not the actual movie name and show time.
+* The database can be accessed by going in to the `Flickz` directory and executing `sqlite3 db.sqlite3` and then type `.tables` to view all the tables and `.schema` of the database.
 
 ## Installation
 * Install Python 3.8 from [here](https://www.python.org/downloads/release/python-382/)
@@ -64,6 +70,7 @@ This is a REST interface for a movie theatre ticket booking system called **Flic
 * A ticket is marked expired and deleted from the database if there is a difference of 8 hours between the booked time and the current time.
 * For a particular showtime, maximum of 20 seats can be booked.
 * The Application is built by following the REST paradigm.
+* Django REST Framework's internal functionality allows to use the browser for fetching and sending API requests like Postman.
 * Added Optional frontend for viewing all movies and all tickets. All movies can be viewed at `http://127.0.0.1:8000` and all tickets can be viewed at `http://127.0.0.1:8000/tickets`
 
 ![All Movies](Demo/Frontend1.png)
