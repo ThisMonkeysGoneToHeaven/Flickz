@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from moviez.models import Movie, Ticket, Timing
 
 # Importing Serializers
-from .serializers import MovieSerializer, TicketSerializerRead, TicketSerializerCreate
+from .serializers import MovieSerializer, TicketSerializerRead, TicketSerializerCreate, TimingSerializer
 
 # Importing time
 import time
@@ -91,10 +91,9 @@ def api_update_ticket(request, slug):
             serializer.save()  # saving to database
             data["success"] = "update successfully"
             return Response(
-                data=data
-            )  # returning json successful message if everything is successful
+                data=data, status=status.HTTP_200_OK)  # returning json successful message if everything is successful
         return Response(
-            serializer.errors, status.HTTP_400_BAD_REQUEST
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )  # returning error if data isn't valid
 
 
@@ -115,9 +114,11 @@ def api_delete_ticket(request, slug):
         # returning response based on what happens
         if operation:
             data["success"] = "delete successful"
+            return Response(data=data, status=status.HTTP_200_OK)
         else:
             data["failure"] = "delete failed"
-        return Response(data=data)
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # FOR POST REQUEST (CREATING)
@@ -126,6 +127,51 @@ def api_delete_ticket(request, slug):
         "POST",
     ]
 )
+
+# FOR POST REQUEST (CREATING)
+@api_view(
+    [
+        "POST",
+    ]
+)
+
+
+# FOR POST REQUEST (CREATING)
+@api_view(
+    [
+        "POST",
+    ]
+)
+def api_create_ticket_fine(request):
+    tickets = Ticket.objects.all()
+    timings = Timing.objects.all()
+    ticket = Ticket()  # Creating ticket
+    if request.method == "POST":
+        the_time = request.data["timing"]  # getting which timing has been requested
+
+        count = 0  # counting how many times that timing had been used
+        for tickety in tickets:
+            if tickety.timing == Timing.objects.filter(id=the_time)[0]:
+                count += 1
+        if count > 20:  # if more than 20 --> error
+            # already 20 tickets have been booked
+            data = {}
+            data[
+                "Failed"
+            ] = "All tickets for this timing has already been booked. Please try another time."
+            return Response(data=data, status=status.HTTP_226_IM_USED)
+        else:
+            serializer = TicketSerializerCreate(
+                ticket, data=request.data
+            )  # getting the data in serialized form
+            if serializer.is_valid():  # checking if data is valid
+                serializer.save()  # saving if valid
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )  # returning error if data isn't valid
+
 
 # FOR POST REQUEST (CREATING)
 @api_view(
@@ -151,14 +197,36 @@ def api_create_ticket(request):
                 "Failed"
             ] = "All tickets for this timing has already been booked. Please try another time."
             return Response(data=data, status=status.HTTP_226_IM_USED)
-        else:  # else makes that object
+        else:
             serializer = TicketSerializerCreate(
-                ticket, data=request.data
-            )  # serializing data to return back
-            if serializer.is_valid():
-                serializer.save()
+            ticket, data=request.data)# getting the data in serialized form
+            if serializer.is_valid():  # checking if data is valid
+                serializer.save()  # saving if valid
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(serializer.errors, status=status.HTTP_201_CREATED)
+            else:
+                print(serializer.errors)
+                return Response(
+                    serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                    )  # returning error if data isn't valid
+
+
+@api_view(
+    [
+        "POST",
+    ]
+)
+def api_create_ticket_works(request):
+    ticket = Ticket()  # Creating Movie object
+    if request.method == "POST":
+        serializer = TicketSerializerCreate(
+            ticket, data=request.data
+        )  # getting the data in serialized form
+        if serializer.is_valid():  # checking if data is valid
+            serializer.save()  # saving if valid
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )  # returning error if data isn't valid
 
 
 # ALL TICKETS OF PARTICULAR TIME
@@ -278,3 +346,25 @@ def api_delete_movie(request, slug):
             # returning errors
             data["failure"] = "delete failed"
         return Response(data=data)
+
+
+
+# TIMING
+# FOR DELETE REQUEST
+@api_view(
+    [
+        "POST",
+    ]
+)
+def api_create_timing(request):
+    time = Timing()  # Creating Movie object
+    if request.method == "POST":
+        serializer = TimingSerializer(
+            time, data=request.data
+        )  # getting the data in serialized form
+        if serializer.is_valid():  # checking if data is valid
+            serializer.save()  # saving if valid
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )  # returning error if data isn't valid

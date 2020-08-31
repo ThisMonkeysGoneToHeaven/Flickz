@@ -2,19 +2,37 @@
 
 {% block title %}Detail for ticket {{ ticket.id }}{% endblock %}
 
+{% block css %}
+
+<style>
+    .texty {
+        font-family: 'Abel', sans-serif;
+    }
+    .heading{
+    	padding-bottom: 9%;
+    }
+</style>
+
+{% endblock %}
 
 {% block content %}
 
-<h2>Details for ticket {{ ticket.id }}</h2>
-<ul>
-    <li>Username - {{ ticket.username }}</li>
-    <li>Phone - {{ ticket.phone }}</li>
-    <li>Booked Date - {{ ticket.booked_date }}</li>
-    <li>Booked_Time - {{ ticket.booked_time }}</li>
-    <li>Movie - {{ ticket.movie }}</li>
-    <li>Timing - {{ ticket.timing }}</li>
+<div class="container">
+    <div class="d-flex justify-content-center pt-4 heading">
+		<h1 class="display-4">Details for ticket {{ ticket.id }}</h1>
+	</div>
+	<ul>
+		<div class="texty">
+		    <h3>Username - {{ ticket.username }}</h3>
+		    <h3>Phone - {{ ticket.phone }}</h3>
+		    <h3>Booked Date - {{ ticket.booked_date }}</h3>
+		    <h3>Booked Time - {{ ticket.booked_time }}</h3>
+		    <h3>Movie - {{ ticket.movie }}</h3>
+		    <h3>Timing - {{ ticket.timing }}</h3>
+	    </div>
 
-</ul>
+	</ul>
+</div>
 
 
 {% endblock %}

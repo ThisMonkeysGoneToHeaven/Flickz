@@ -11,33 +11,36 @@ from .views import (
     api_detail_ticket_all,
     api_detail_ticket_time,
     api_detail_movie_all,
+    api_create_timing
 )
 
-app_name = "moviez"
+app_name = "api"
 
 urlpatterns = [
     # TICKET
     # To get detail about particular ticket
-    path("ticket/<int:slug>/", api_detail_ticket, name="ticket-detail"),
+    path("ticket/<int:slug>/", api_detail_ticket, name="api-ticket-detail"),
     # to update particular ticket
-    path("ticket/<int:slug>/update", api_update_ticket, name="ticket-update"),
+    path("ticket/<int:slug>/update", api_update_ticket, name="api-ticket-update"),
     # to delete particular ticket
-    path("ticket/<int:slug>/delete", api_delete_ticket, name="ticket-delete"),
+    path("ticket/<int:slug>/delete", api_delete_ticket, name="api-ticket-delete"),
     # to create ticket
-    path("ticket/create", api_create_ticket, name="ticket-create"),
+    path("ticket/create", api_create_ticket, name="api-ticket-create"),
     # to get details about all tickets
-    path("ticket/all", api_detail_ticket_all, name="ticket-detail-all"),
+    path("ticket/all", api_detail_ticket_all, name="api-ticket-detail-all"),
     # for giving details about tickets on basis of time
-    path("ticket/time/<int:slug>/", api_detail_ticket_time, name="ticket-detail-time"),
+    path("ticket/time/<int:slug>/", api_detail_ticket_time, name="api-ticket-detail-time"),
     # MOVIE
     # to create movie
-    path("movie/create", api_create_movie, name="movie-create"),
+    path("movie/create", api_create_movie, name="api-movie-create"),
     # to update movie
-    path("movie/<int:slug>/update", api_update_movie, name="movie-update"),
+    path("movie/<int:slug>/update", api_update_movie, name="api-movie-update"),
     # to delete movie
-    path("movie/<int:slug>/delete", api_delete_movie, name="movie-delete"),
+    path("movie/<int:slug>/delete", api_delete_movie, name="api-movie-delete"),
     # to get details about particular movie
-    path("movie/<int:slug>/", api_detail_movie, name="movie-detail"),
+    path("movie/<int:slug>/", api_detail_movie, name="api-movie-detail"),
     # to get details about all movies
-    path("movie/all", api_detail_movie_all, name="movie-detail-all"),
+    path("movie/all", api_detail_movie_all, name="api-movie-detail-all"),
+    # to create timing for testing
+    path("timing/create", api_create_timing, name="api-create-timing")
 ]

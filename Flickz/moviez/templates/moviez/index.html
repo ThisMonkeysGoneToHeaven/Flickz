@@ -16,6 +16,11 @@
 
     .heading {
         color: white;
+        margin-left: 32%;
+    }
+
+    .btn {
+        margin-left: 50%;
     }
 </style>
 
@@ -23,16 +28,19 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container pt-4">
     <div class="d-flex justify-content-center pt-3 heading">
-        <h1>All Movies</h1>
+        <h1 class="pr-4">All Movies</h1>
+        <a class="btn btn-primary" href="{% url 'moviez:all-tickets' %}" role="button">Tickets</a>
+
+
     </div>
     <div class="row">
         {% for movie in movies %}
         <div class="col-sm-4 py-4">
             <div class="card text-center text-white bg-dark border-primary" style="width: 19rem">
-                <a href="#"><img class="card-img-top" src="{{ movie.poster }}" alt="Can't Load The Image"
-                        style="width:300px; height:400px"></a>
+                <img class="card-img-top" src="{{ movie.poster }}" alt="Can't Load The Image"
+                        style="width:300px; height:400px">
                 <div class="card-body">
                     <h5 class="card-title">{{ movie.title }}</h5>
                     <h5 class="card-text">{{ movie.price }}</h5>

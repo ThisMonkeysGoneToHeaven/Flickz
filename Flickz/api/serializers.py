@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from moviez.models import Movie, Ticket
+from moviez.models import Movie, Ticket, Timing
 
 
 # For Movie Model
@@ -40,3 +40,10 @@ class TicketSerializerCreate(serializers.ModelSerializer):
             "booked_time",
             "timing",
         ]  # movie_time
+
+
+# For Movie Model
+class TimingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Timing
+        fields = ["time"]
