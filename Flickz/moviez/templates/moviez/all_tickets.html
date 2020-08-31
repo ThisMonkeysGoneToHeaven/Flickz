@@ -1,0 +1,48 @@
+{% extends "moviez/base.html" %}
+
+{% block title %}All Tickets{% endblock %}
+
+{% block css %}
+
+<style>
+    body {
+        background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    }
+
+    .cardi {
+        background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="d-flex justify-content-center pt-3 heading">
+        <h1>All Tickets</h1>
+    </div>
+    <div class="row">
+        {% for ticket in tickets %}
+        <div class="col-sm-4 py-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ticket.movie }}</h5>
+                    <p class="card-text">Username: {{ ticket.username }}<br />
+                        Phone: {{ ticket.phone }}<br />
+                        Movie Time: {{ ticket.timing }}<br />
+                        Booked Date: {{ ticket.booked_date }}
+
+                    </p>
+
+                    <a href="/ticket/{{ticket.id}}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

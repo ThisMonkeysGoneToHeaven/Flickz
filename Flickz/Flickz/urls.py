@@ -18,7 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("moviez/", include("moviez.urls")),
+    path("", include("moviez.urls")),
     # REST FRAMWEWORK
     path("api/", include("api.urls")),
 ]

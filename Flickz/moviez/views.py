@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Movie
+from .models import Movie, Ticket
 from django.template import loader
 
 
@@ -15,4 +15,14 @@ def IndexView(request):
 
 
 def TicketView(request, slug):
-    return HttpResponse("Details for movie id: " + str(slug))
+    template = "moviez/detail.html"
+    ticket = Ticket.objects.get(id=slug)
+    context = {"ticket": ticket}
+    return render(request, template, context)
+
+
+def TicketListView(request):
+    template = "moviez/all_tickets.html"
+    tickets = Ticket.objects.all()
+    context = {"tickets": tickets}
+    return render(request, template, context)

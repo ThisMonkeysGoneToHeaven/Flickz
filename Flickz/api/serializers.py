@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from moviez.models import Movie, Ticket
 
+
 # For Movie Model
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,10 +9,34 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = ["title", "price", "poster"]
 
 
-# For ticket model
-class TicketSerializer(serializers.ModelSerializer):
+# For ticket model (For Reading only)
+class TicketSerializerRead(serializers.ModelSerializer):
     movie = serializers.CharField(source="movie.title", read_only=True)
+    timing = serializers.CharField(source="timing.time", read_only=True)
 
     class Meta:
         model = Ticket
-        fields = ["username", "phone", "movie", "booking_time"]  # movie_time
+        fields = [
+            "id",
+            "username",
+            "phone",
+            "movie",
+            "booked_date",
+            "booked_time",
+            "timing",
+        ]
+
+
+# For ticket model (for creating)
+class TicketSerializerCreate(serializers.ModelSerializer):
+    class Meta:
+        model = Ticket
+        fields = [
+            "id",
+            "username",
+            "phone",
+            "movie",
+            "booked_date",
+            "booked_time",
+            "timing",
+        ]  # movie_time

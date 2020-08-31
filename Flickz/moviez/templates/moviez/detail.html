@@ -1,0 +1,20 @@
+{% extends "moviez/base.html" %}
+
+{% block title %}Detail for ticket {{ ticket.id }}{% endblock %}
+
+
+{% block content %}
+
+<h2>Details for ticket {{ ticket.id }}</h2>
+<ul>
+    <li>Username - {{ ticket.username }}</li>
+    <li>Phone - {{ ticket.phone }}</li>
+    <li>Booked Date - {{ ticket.booked_date }}</li>
+    <li>Booked_Time - {{ ticket.booked_time }}</li>
+    <li>Movie - {{ ticket.movie }}</li>
+    <li>Timing - {{ ticket.timing }}</li>
+
+</ul>
+
+
+{% endblock %}
